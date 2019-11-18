@@ -22,16 +22,16 @@
 
          <div class="images">
             <transition name="fade">
-            <div class="background-images" v-show="day" style="background-image: url(http://localhost:3000/public/img/day.jpg);"></div>
+            <div class="background-images" v-show="day" style="background-image: url(https://wellness-digiroom.herokuapp.com/public/img/day.jpg);"></div>
             </transition>
             <transition name="fade">
-            <div class="background-images" v-show="evening" style=" background-image: url(http://localhost:3000/public/img/evening.jpg);"></div>
+            <div class="background-images" v-show="evening" style=" background-image: url(https://wellness-digiroom.herokuapp.com/public/img/evening.jpg);"></div>
             </transition>
             <transition name="fade">
-            <div class="background-images" v-show="night" style=" background-image: url(http://localhost:3000/public/img/night.jpg);"></div>
+            <div class="background-images" v-show="night" style=" background-image: url(https://wellness-digiroom.herokuapp.com/public/img/night.jpg);"></div>
             </transition>
             <transition name="fade">
-            <div class="background-images" v-show="lightsOff" style=" background-image: url(http://localhost:3000/public/img/lightsoff.jpg);"></div>
+            <div class="background-images" v-show="lightsOff" style=" background-image: url(https://wellness-digiroom.herokuapp.com/public/img/lightsoff.jpg);"></div>
             </transition>
          </div>
         <div class="room-tools">
@@ -101,7 +101,7 @@
       },
       qrcode() {
         let qrcode = new QRCode('qrcodes', {
-          text: 'http://localhost:3000/control?id=' + this.id,
+          text: 'https://wellness-digiroom.herokuapp.com/control?id=' + this.id,
           width: 128,
           height: 128,
           colorDark : '#000000',
