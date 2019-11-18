@@ -74,6 +74,7 @@
       night: false,
       lightsOff: false,
       trigger: 0,
+      qr_index: 0
     },
 
     // Our vue created method
@@ -108,6 +109,7 @@
           colorLight : '#ffffff',
           correctLevel : QRCode.CorrectLevel.H,
         });
+        this.qr_index += 1;
       },
       changeState(){
         if(this.control_id === this.id){
@@ -143,7 +145,10 @@
     },
     watch: {
       id : function() {
-        this.$nextTick(this.qrcode());
+        if(this.qr_index < 1){
+          this.$nextTick(this.qrcode());
+        }
+
       },
       trigger : function() {
         this.changeState();
