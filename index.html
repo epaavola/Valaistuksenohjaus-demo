@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Digital Room</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"  type='text/css'>
+
+</head>
+
+<body>
+
+<div id="app">
+    <div class="container">
+     <div class="room">
+         <div class="otsake">
+             <h1>"Digi digi"</h1>
+         </div>
+
+         <div class="images">
+            <transition name="fade">
+            <div class="background-images" v-show="day" style="background-image: url(http://localhost:3000/public/img/day.jpg);"></div>
+            </transition>
+            <transition name="fade">
+            <div class="background-images" v-show="evening" style=" background-image: url(http://localhost:3000/public/img/evening.jpg);"></div>
+            </transition>
+            <transition name="fade">
+            <div class="background-images" v-show="night" style=" background-image: url(http://localhost:3000/public/img/night.jpg);"></div>
+            </transition>
+            <transition name="fade">
+            <div class="background-images" v-show="lightsOff" style=" background-image: url(http://localhost:3000/public/img/lightsoff.jpg);"></div>
+            </transition>
+         </div>
+        <div class="room-tools">
+
+            <div class="switch">
+                <button class="btn" @click="setState(1)"><i class="fas fa-sun"></i></button>
+                <button class="btn" @click="setState(2)"><i class="fas fa-adjust"></i></button>
+                <button class="btn" @click="setState(3)"><i class="fas fa-moon"></i></button>
+                <button class="btn" @click="setState(4)"><i class="fas fa-circle-notch"></i></button>
+            </div>
+            <div id="qrcodes"></div>
+        </div>
+     </div>
+
+    </div>
+</div>
+
+</body>
+<script type="application/javascript" src="public/qrcode.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+
+<script>
+  // Client side Socket.IO object
+  var socket = io();
+
+  // Creating a new Vue Instance
+  let vue = new Vue({
+
+    // Adding a root element to our vue app
+    el: '#app',
+    // Declaring our data object with empty arrays and properties
+    data: {
+      control_id : 0,
+      id: 0,
+      qr: null,
+      state: 0,
+      day: false,
+      evening: true,
+      night: false,
+      lightsOff: false,
+      trigger: 0,
+    },
+
+    // Our vue created method
+    created() {
+
+        // Listening to 'connections' event emitted from the server to get the total number of connected clients
+        socket.on('connections', (data) => {
+          this.id = data;
+        });
+
+        socket.on('changeState', (id, state) => {
+          this.control_id = parseInt(id, 10);
+          this.state = state;
+          this.trigger += 1;
+        });
+
+    },
+
+    //Vue Methods hook
+    methods: {
+      setState(x) {
+        this.state = x;
+        this.control_id = this.id;
+        this.changeState();
+      },
+      qrcode() {
+        let qrcode = new QRCode('qrcodes', {
+          text: 'http://localhost:3000/control?id=' + this.id,
+          width: 128,
+          height: 128,
+          colorDark : '#000000',
+          colorLight : '#ffffff',
+          correctLevel : QRCode.CorrectLevel.H,
+        });
+      },
+      changeState(){
+        if(this.control_id === this.id){
+          switch (this.state) {
+            case 1:
+              this.day = true;
+              this.night = false;
+              this.lightsOff = false;
+              this.evening = false;
+              break;
+            case 2:
+              this.night = false;
+              this.lightsOff = false;
+              this.day = false;
+              this.evening = true;
+              break;
+            case 3:
+              this.evening = false;
+              this.lightsOff = false;
+              this.day = false;
+              this.night = true;
+              break;
+            case 4:
+              this.evening = false;
+              this.night = false;
+              this.day = false;
+              this.lightsOff = true;
+              break;
+
+          }
+        }
+      },
+    },
+    watch: {
+      id : function() {
+        this.$nextTick(this.qrcode());
+      },
+      trigger : function() {
+        this.changeState();
+      },
+    },
+  });
+
+</script>
+
+<style>
+    .fade-enter{
+        opacity: 0;
+    }
+    .fade-enter-active{
+         transition: opacity 1s;
+    }
+    .fade-leave{
+      /*   opacity: 1; */
+    }
+    .fade-leave-active{
+        transition: opacity 1s;
+        opacity: 0;
+    }
+
+#qrcodes {
+    background: white;
+    padding: 0.5rem;
+    border: 5px solid white;
+    border-radius: 1rem;
+    margin: 0 1em 0 0;
+}
+.otsake {
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    top: 2em;
+    left: 2em;
+    color: white;
+    z-index: 3;
+    font-family: Papyrus;
+}
+.room-tools {
+    position: absolute;
+    bottom: 0;
+    max-width: 1788px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    z-index: 2;
+    padding: 0 0 4rem;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    min-height: 100vh;
+    background: black;
+}
+
+.background-images {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.switch {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    margin: 0 1em 0 0;
+}
+
+.btn {
+    width: 75px;
+    height: 75px;
+    background-color: transparent; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 10px 10px; /* Some padding */
+    font-size: 30px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    margin: 0;
+    opacity: 0.5;
+}
+
+.btn:hover, .btn:active, .btn:focus {
+    opacity: 1;
+    outline:none;
+}
+
+
+</style>
+</html>

@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Digital Room Control</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"  type='text/css'>
+
+</head>
+
+<body style="background: #000062">
+
+<div id="app">
+
+    <div class="container" >
+
+        <div class="switch">
+            <button class="btn" @click="dayLight"><i class="fas fa-sun"></i></button>
+            <button class="btn" @click="eveningLight"><i class="fas fa-adjust"></i></button>
+            <button class="btn" @click="nightLight"><i class="fas fa-moon"></i></button>
+            <button class="btn" @click="lightsOff"><i class="fas fa-circle-notch"></i></button>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+
+
+<script>
+  // Client side Socket.IO object
+  var socket = io();
+
+  // Creating a new Vue Instance
+  let vue = new Vue({
+
+    // Adding a root element to our vue app
+    el: '#app',
+    // Declaring our data object with empty arrays and properties
+    data: {
+      control_id: 0,
+      state: 0,
+    },
+
+    // Our vue created method
+    created() {
+      socket.on('controlID', (id) => {
+        this.control_id = id;
+      })
+    },
+
+    //Vue Methods hook
+    methods: {
+
+      dayLight() {
+        let parsedUrl = new URL(window.location.href);
+        this.control_id = parsedUrl.searchParams.get("id");
+        this.state = 1;
+        socket.emit('newState', this.control_id, this.state);
+      },
+      eveningLight() {
+        let parsedUrl = new URL(window.location.href);
+        this.control_id = parsedUrl.searchParams.get("id");
+        this.state = 2;
+        socket.emit('newState', this.control_id, this.state);
+      },
+      nightLight() {
+        let parsedUrl = new URL(window.location.href);
+        this.control_id = parsedUrl.searchParams.get("id");
+        this.state = 3;
+        socket.emit('newState', this.control_id, this.state);
+      },
+      lightsOff() {
+        let parsedUrl = new URL(window.location.href);
+        this.control_id = parsedUrl.searchParams.get("id");
+        this.state = 4;
+        socket.emit('newState', this.control_id, this.state);
+      },
+    }
+  })
+</script>
+<style>
+.container {
+display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.switch {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    margin: 15em 0 0 0;
+}
+
+.btn {
+    width: 125px;
+    height: 125px;
+    background-color: transparent; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 10px 10px; /* Some padding */
+    font-size: 60px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    margin: 0;
+    opacity: 0.5;
+}
+
+    .btn:hover, .btn:active, .btn:focus {
+        opacity: 1;
+        outline:none;
+    }
+
+</style>
+</html>
