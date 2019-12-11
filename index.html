@@ -71,6 +71,9 @@
                  <div class="background-images" v-if="state === 4 && room === 4" style="background-image: url(https://wellness-kellohalli.herokuapp.com/public/img/room_scene-4.jpg);"></div>
              </transition>
          </div>
+        <div class="tool-text" v-if="!isMobile()">
+            <p>Testaa puhelimella.</p>
+        </div>
         <div class="room-tools">
             <div class="switch">
                 <button class="btn" @click="setState(1)"><i class="fas fa-sun"></i></button>
@@ -78,7 +81,7 @@
                 <button class="btn" @click="setState(3)"><i class="fas fa-moon"></i></button>
                 <button class="btn" @click="setState(4)"><i class="fas fa-circle-notch"></i></button>
             </div>
-            <div id="qrcodes"></div>
+            <div id="qrcodes" v-if="!isMobile()"></div>
         </div>
      </div>
     </div>
@@ -135,6 +138,13 @@
           correctLevel : QRCode.CorrectLevel.H,
         });
         this.qr_index += 1;
+      },
+      isMobile() {
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          return true
+        } else {
+          return false
+        }
       },
     },
     watch: {

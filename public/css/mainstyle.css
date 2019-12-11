@@ -59,6 +59,22 @@
     align-items: flex-end;
     z-index: 2;
     padding: 0 0 4rem;
+
+}
+.tool-text {
+    position: absolute;
+    bottom: 16em;
+    right: 9.8em;
+    max-width: 1788px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    z-index: 2;
+    padding: 0;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: smaller;
 }
 
 .container {
@@ -112,3 +128,36 @@
     outline:none;
 }
 
+@media screen and (max-width: 800px) {
+   .room-tools {
+       justify-content: center;
+   }
+    .switch {
+        margin: 0;
+    }
+    .otsake {
+        position: absolute;
+        justify-content: center;
+        align-self: center;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+    .otsake h1, .otsake h3 {
+        text-align: center;
+    }
+
+    .huoneValinta {
+        justify-content: center;
+        position: absolute;
+        align-items: flex-end;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        flex-direction: row;
+    }
+    .huoneValinta h2 {
+        padding: 0 0.5em 0 0.5em;
+    }
+}
