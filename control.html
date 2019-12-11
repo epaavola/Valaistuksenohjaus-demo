@@ -47,7 +47,9 @@
     },
     created() {
       socket.on('changeRoom', (room, check_id) => {
+        console.log(check_id);
         this.id = parseInt(check_id, 10);
+        console.log(this.id);
         if(this.id === this.control_id){
           this.room = room;
         }
