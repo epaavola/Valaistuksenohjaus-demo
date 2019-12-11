@@ -64,7 +64,6 @@
 .tool-text {
     position: absolute;
     bottom: 16em;
-    right: 9.8em;
     max-width: 1788px;
     width: 100%;
     display: flex;
@@ -75,6 +74,9 @@
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: smaller;
+}
+.tool-text p {
+    padding: 0 2.2em;
 }
 
 .container {
@@ -131,6 +133,8 @@
 @media screen and (max-width: 800px) {
    .room-tools {
        justify-content: center;
+       bottom: 5em;
+       padding: 0;
    }
     .switch {
         margin: 0;
