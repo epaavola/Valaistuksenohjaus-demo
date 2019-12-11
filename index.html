@@ -1,41 +1,77 @@
-
 <!DOCTYPE html>
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="public/css/mainstyle.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <title>Digital Room</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"  type='text/css'>
-
 </head>
-
 <body>
-
 <div id="app">
     <div class="container">
      <div class="room">
          <div class="otsake">
-             <h1>"Digi digi"</h1>
+             <h1>KELLOHALLI</h1>
+             <h3>Valaistuksenohjaus demo</h3>
          </div>
-
+         <div class="huoneValinta">
+             <h2 :style="room===1 ? 'text-decoration : underline;' : ''" @click="setRoom(1)">Baari</h2>
+             <h2 :style="room===3 ? 'text-decoration : underline;' : ''" @click="setRoom(3)">Sali</h2>
+             <h2 :style="room===4 ? 'text-decoration : underline;' : ''" @click="setRoom(4)">Kabinetti</h2>
+         </div>
          <div class="images">
             <transition name="fade">
-            <div class="background-images" v-show="day" style="background-image: url(https://wellness-digiroom.herokuapp.com/public/img/day.jpg);"></div>
+                <div class="background-images" v-if="state === 1 && room === 1" style="background-image: url(http://localhost:8081/public/img/wide_bar_scene-1.jpg);"></div>
             </transition>
             <transition name="fade">
-            <div class="background-images" v-show="evening" style=" background-image: url(https://wellness-digiroom.herokuapp.com/public/img/evening.jpg);"></div>
+                <div class="background-images" v-if="state === 1 && room === 2" style="background-image: url(http://localhost:8081/public/img/bar_scene-1.jpg);"></div>
             </transition>
             <transition name="fade">
-            <div class="background-images" v-show="night" style=" background-image: url(https://wellness-digiroom.herokuapp.com/public/img/night.jpg);"></div>
+                <div class="background-images" v-if="state === 1 && room === 3" style="background-image: url(http://localhost:8081/public/img/kitchen_scene-1.jpg);"></div>
             </transition>
             <transition name="fade">
-            <div class="background-images" v-show="lightsOff" style=" background-image: url(https://wellness-digiroom.herokuapp.com/public/img/lightsoff.jpg);"></div>
+                <div class="background-images" v-if="state === 1 && room === 4" style="background-image: url(http://localhost:8081/public/img/room_scene-1.jpg);"></div>
             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 2 && room === 1" style="background-image: url(http://localhost:8081/public/img/wide_bar_scene-2.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 2 && room === 2" style="background-image: url(http://localhost:8081/public/img/bar_scene-2.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 2 && room === 3" style="background-image: url(http://localhost:8081/public/img/kitchen_scene-2.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 2 && room === 4" style="background-image: url(http://localhost:8081/public/img/room_scene-2.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 3 && room === 1" style="background-image: url(http://localhost:8081/public/img/wide_bar_scene-3.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 3 && room === 2" style="background-image: url(http://localhost:8081/public/img/bar_scene-3.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 3 && room === 3" style="background-image: url(http://localhost:8081/public/img/kitchen_scene-3.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 3 && room === 4" style="background-image: url(http://localhost:8081/public/img/room_scene-3.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 4 && room === 1" style="background-image: url(http://localhost:8081/public/img/wide_bar_scene-4.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 4 && room === 2" style="background-image: url(http://localhost:8081/public/img/bar_scene-4.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 4 && room === 3" style="background-image: url(http://localhost:8081/public/img/kitchen_scene-4.jpg);"></div>
+             </transition>
+             <transition name="fade">
+                 <div class="background-images" v-if="state === 4 && room === 4" style="background-image: url(http://localhost:8081/public/img/room_scene-4.jpg);"></div>
+             </transition>
          </div>
         <div class="room-tools">
-
             <div class="switch">
                 <button class="btn" @click="setState(1)"><i class="fas fa-sun"></i></button>
                 <button class="btn" @click="setState(2)"><i class="fas fa-adjust"></i></button>
@@ -45,7 +81,6 @@
             <div id="qrcodes"></div>
         </div>
      </div>
-
     </div>
 </div>
 
@@ -55,54 +90,42 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
 
 <script>
-  // Client side Socket.IO object
-  var socket = io();
+  // Client side Socket.IO olio
+  let socket = io();
 
-  // Creating a new Vue Instance
   let vue = new Vue({
-
-    // Adding a root element to our vue app
     el: '#app',
-    // Declaring our data object with empty arrays and properties
     data: {
       control_id : 0,
       id: 0,
       qr: null,
-      state: 0,
-      day: false,
-      evening: true,
-      night: false,
-      lightsOff: false,
-      trigger: 0,
+      state: 2,
+      room: 1,
       qr_index: 0
     },
 
-    // Our vue created method
     created() {
-
-        // Listening to 'connections' event emitted from the server to get the total number of connected clients
-        socket.on('connections', (data) => {
-          this.id = data;
+        socket.on('connections', (new_id) => {
+          this.id = new_id;
         });
-
-        socket.on('changeState', (id, state) => {
+        socket.on('changeState', (id, state, room) => {
           this.control_id = parseInt(id, 10);
+          this.room = room;
           this.state = state;
-          this.trigger += 1;
         });
-
     },
-
-    //Vue Methods hook
     methods: {
       setState(x) {
         this.state = x;
         this.control_id = this.id;
-        this.changeState();
+      },
+      setRoom(x) {
+        this.room = x;
+        socket.emit('changeRoom', this.room);
       },
       qrcode() {
         let qrcode = new QRCode('qrcodes', {
-          text: 'https://wellness-digiroom.herokuapp.com/control?id=' + this.id,
+          text: 'http://localhost:8081/control?id=' + this.id,
           width: 128,
           height: 128,
           colorDark : '#000000',
@@ -111,148 +134,15 @@
         });
         this.qr_index += 1;
       },
-      changeState(){
-        if(this.control_id === this.id){
-          switch (this.state) {
-            case 1:
-              this.day = true;
-              this.night = false;
-              this.lightsOff = false;
-              this.evening = false;
-              break;
-            case 2:
-              this.night = false;
-              this.lightsOff = false;
-              this.day = false;
-              this.evening = true;
-              break;
-            case 3:
-              this.evening = false;
-              this.lightsOff = false;
-              this.day = false;
-              this.night = true;
-              break;
-            case 4:
-              this.evening = false;
-              this.night = false;
-              this.day = false;
-              this.lightsOff = true;
-              break;
-
-          }
-        }
-      },
     },
     watch: {
       id : function() {
         if(this.qr_index < 1){
           this.$nextTick(this.qrcode());
         }
-
-      },
-      trigger : function() {
-        this.changeState();
       },
     },
   });
-
 </script>
 
-<style>
-    .fade-enter{
-        opacity: 0;
-    }
-    .fade-enter-active{
-         transition: opacity 1s;
-    }
-    .fade-leave{
-      /*   opacity: 1; */
-    }
-    .fade-leave-active{
-        transition: opacity 1s;
-        opacity: 0;
-    }
-
-#qrcodes {
-    background: white;
-    padding: 0.5rem;
-    border: 5px solid white;
-    border-radius: 1rem;
-    margin: 0 1em 0 0;
-}
-.otsake {
-    position: absolute;
-    display: flex;
-    justify-content: flex-start;
-    top: 2em;
-    left: 2em;
-    color: white;
-    z-index: 3;
-    font-family: Papyrus;
-}
-.room-tools {
-    position: absolute;
-    bottom: 0;
-    max-width: 1788px;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    z-index: 2;
-    padding: 0 0 4rem;
-}
-
-.container {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    min-height: 100vh;
-    background: black;
-}
-
-.background-images {
-    height: 100%;
-    width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-.switch {
-    width: 150px;
-    height: 150px;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    border-radius: 8px;
-    border: 2px solid #fff;
-    margin: 0 1em 0 0;
-}
-
-.btn {
-    width: 75px;
-    height: 75px;
-    background-color: transparent; /* Blue background */
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 10px 10px; /* Some padding */
-    font-size: 30px; /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
-    margin: 0;
-    opacity: 0.5;
-}
-
-.btn:hover, .btn:active, .btn:focus {
-    opacity: 1;
-    outline:none;
-}
-
-
-</style>
 </html>

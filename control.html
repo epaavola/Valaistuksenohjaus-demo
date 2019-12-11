@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,117 +7,67 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Digital Room Control</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"  type='text/css'>
-
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href="public/css/controlstyle.css" rel="stylesheet" type="text/css">
 </head>
 
-<body style="background: #000062">
-
+<body>
 <div id="app">
-
     <div class="container" >
-
-        <div class="switch">
-            <button class="btn" @click="dayLight"><i class="fas fa-sun"></i></button>
-            <button class="btn" @click="eveningLight"><i class="fas fa-adjust"></i></button>
-            <button class="btn" @click="nightLight"><i class="fas fa-moon"></i></button>
-            <button class="btn" @click="lightsOff"><i class="fas fa-circle-notch"></i></button>
+        <h2>KELLOHALLI</h2>
+        <div class="huoneValinta">
+            <h3 :style="room===1 ? 'border-bottom : white 2px solid' : 'border-bottom : none;'" @click="setRoom(1)">Baari</h3>
+            <h3 :style="room===3 ? 'border-bottom : white 2px solid' : 'border-bottom : none;'" @click="setRoom(3)">Sali</h3>
+            <h3 :style="room===4 ? 'border-bottom : white 2px solid' : 'border-bottom : none;'" @click="setRoom(4)">Kabinetti</h3>
         </div>
-
+        <div class="switch">
+            <button class="btn" @click="setMode(1)"><i class="fas fa-sun"></i></button>
+            <button class="btn" @click="setMode(2)"><i class="fas fa-adjust"></i></button>
+            <button class="btn" @click="setMode(3)"><i class="fas fa-moon"></i></button>
+            <button class="btn" @click="setMode(4)"><i class="fas fa-circle-notch"></i></button>
+        </div>
     </div>
-
 </div>
-
 </body>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
-
-
 <script>
-  // Client side Socket.IO object
-  var socket = io();
+  // Client side Socket.IO olio
+  let socket = io();
 
-  // Creating a new Vue Instance
   let vue = new Vue({
-
-    // Adding a root element to our vue app
     el: '#app',
-    // Declaring our data object with empty arrays and properties
     data: {
       control_id: 0,
       state: 0,
+      room: 1,
+      test: true,
     },
-
-    // Our vue created method
     created() {
-      socket.on('controlID', (id) => {
-        this.control_id = id;
-      })
+      socket.on('changeRoom', (room) => {
+        this.room = room;
+      });
     },
-
-    //Vue Methods hook
     methods: {
-
-      dayLight() {
+      setMode(x) {
         let parsedUrl = new URL(window.location.href);
         this.control_id = parsedUrl.searchParams.get("id");
-        this.state = 1;
-        socket.emit('newState', this.control_id, this.state);
+        if(x === 1) this.state = 1;
+        if(x === 2) this.state = 2;
+        if(x === 3) this.state = 3;
+        if(x === 4) this.state = 4;
+        socket.emit('newState', this.control_id, this.state, this.room);
       },
-      eveningLight() {
+      setRoom(x) {
         let parsedUrl = new URL(window.location.href);
         this.control_id = parsedUrl.searchParams.get("id");
-        this.state = 2;
-        socket.emit('newState', this.control_id, this.state);
-      },
-      nightLight() {
-        let parsedUrl = new URL(window.location.href);
-        this.control_id = parsedUrl.searchParams.get("id");
-        this.state = 3;
-        socket.emit('newState', this.control_id, this.state);
-      },
-      lightsOff() {
-        let parsedUrl = new URL(window.location.href);
-        this.control_id = parsedUrl.searchParams.get("id");
-        this.state = 4;
-        socket.emit('newState', this.control_id, this.state);
-      },
+        if(x === 1) this.room = 1;
+        if(x === 3) this.room = 3;
+        if(x === 4) this.room = 4;
+        socket.emit('newState', this.control_id, this.state, this.room);
+      }
     }
   })
 </script>
-<style>
-.container {
-display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-}
-.switch {
-    width: 250px;
-    height: 250px;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    border-radius: 8px;
-    border: 2px solid #fff;
-    margin: 10em 0 0 0;
-}
-
-.btn {
-    width: 125px;
-    height: 125px;
-    background-color: transparent; /* Blue background */
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 10px 10px; /* Some padding */
-    font-size: 60px; /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
-    margin: 0;
-    opacity: 0.5;
-}
-
-    .btn:hover, .btn:active, .btn:focus {
-        opacity: 1;
-        outline:none;
-    }
-
-</style>
 </html>

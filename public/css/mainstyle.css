@@ -1,0 +1,114 @@
+.fade-enter{
+    opacity: 0;
+}
+.fade-enter-active{
+    transition: opacity 1s;
+}
+
+.fade-leave-active{
+    transition: opacity 1s;
+    opacity: 0;
+}
+
+#qrcodes {
+    background: white;
+    padding: 0.5rem;
+    border: 5px solid white;
+    border-radius: 1rem;
+    margin: 0 1em 0 0;
+}
+.otsake {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    top: 2em;
+    left: 2em;
+    color: white;
+    z-index: 3;
+    font-family: 'Poppins', sans-serif;
+}
+.otsake h1 {
+    margin: 1em 0 0 5px;
+}
+.otsake h3 {
+    margin: 0 0 0 5px;
+}
+.huoneValinta {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    top: 14em;
+    left: 2em;
+    color: white;
+    z-index: 3;
+    font-family: 'Poppins', sans-serif;
+}
+.huoneValinta h2:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.2);
+}
+.room-tools {
+    position: absolute;
+    bottom: 0;
+    max-width: 1788px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    z-index: 2;
+    padding: 0 0 4rem;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    min-height: 100vh;
+    background: black;
+}
+
+.background-images {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.switch {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    margin: 0 1em 0 0;
+}
+
+.btn {
+    width: 75px;
+    height: 75px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    font-size: 30px;
+    cursor: pointer;
+    margin: 0;
+    opacity: 0.5;
+}
+
+.btn:hover, .btn:active, .btn:focus {
+    opacity: 1;
+    outline:none;
+}
+

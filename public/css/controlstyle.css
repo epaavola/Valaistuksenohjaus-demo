@@ -1,0 +1,56 @@
+body {
+    background-image: url("/public/img/gradient-bg.jpg");
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+    padding: 1em;
+}
+.container h2 {
+    color: white;
+    text-align: center;
+    font-family: 'Poppins';
+}
+.huoneValinta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: white;
+    text-align: center;
+    font-family: 'Poppins';
+}
+.huoneValinta h3:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.2);
+}
+.switch {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    margin: 2em 1em 1em 1em;
+}
+
+.btn {
+    width: 125px;
+    height: 125px;
+    background-color: transparent; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 10px 10px; /* Some padding */
+    font-size: 60px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    margin: 0;
+    opacity: 0.5;
+}
+
+.btn:hover, .btn:active, .btn:focus {
+    opacity: 1;
+    outline:none;
+}
