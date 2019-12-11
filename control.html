@@ -46,8 +46,8 @@
       id: 0,
     },
     created() {
-      socket.on('changeRoom', (room, id) => {
-        this.id = id;
+      socket.on('changeRoom', (room, check_id) => {
+        this.id = check_id;
         if(this.id === this.control_id){
           this.room = room;
         }
