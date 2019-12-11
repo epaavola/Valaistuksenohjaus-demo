@@ -47,9 +47,11 @@
     },
     created() {
       socket.on('changeRoom', (room, check_id) => {
-        console.log(check_id);
-        console.log(this.control_id);
-        if(check_id === this.control_id){
+        let parsedUrl = new URL(window.location.href);
+        this.control_id = parsedUrl.searchParams.get("id");
+        console.log(typeof check_id);
+        console.log(typeof this.control_id);
+        if(parseInt(check_id,10) === this.control_id){
           this.room = room;
         }
       });
