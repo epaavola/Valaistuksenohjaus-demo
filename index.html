@@ -111,7 +111,7 @@
         socket.on('changeState', (id, state, room) => {
           this.control_id = parseInt(id, 10);
           this.room = room;
-          this.state = state;
+          if(this.id === this.control_id) this.state = state;
         });
     },
     methods: {
