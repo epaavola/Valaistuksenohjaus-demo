@@ -123,7 +123,7 @@
       },
       setRoom(x) {
         this.room = x;
-        socket.emit('changeRoom', this.room);
+        socket.emit('changeRoom', this.room, this.id);
       },
       qrcode() {
         let qrcode = new QRCode('qrcodes', {

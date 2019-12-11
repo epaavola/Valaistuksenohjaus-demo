@@ -26,8 +26,8 @@ io.on('connection', (socket) => {
     io.sockets.emit('changeState', id, state, room);
   });
 
-  socket.on('changeRoom', function(room) {
-    io.sockets.emit('changeRoom', room);
+  socket.on('changeRoom', function(room, id) {
+    io.sockets.emit('changeRoom', room, id);
   });
 });
 

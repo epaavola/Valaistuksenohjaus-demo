@@ -43,10 +43,14 @@
       state: 0,
       room: 1,
       test: true,
+      id: 0,
     },
     created() {
-      socket.on('changeRoom', (room) => {
-        this.room = room;
+      socket.on('changeRoom', (room, id) => {
+        this.id = parseInt(id, 10);
+        if(this.id === this.control_id){
+          this.room = room;
+        }
       });
     },
     methods: {
