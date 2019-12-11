@@ -14,8 +14,8 @@ app.get('/control', (req, res) => {
   res.sendFile(__dirname + '/control.html')
 });
 
-http.listen(8081 , () => {
-  console.log('Listening on port *:' + 8081 );
+http.listen(process.env.PORT , () => {
+  console.log('Listening on port *:' + process.env.PORT );
 });
 
 io.on('connection', (socket) => {
