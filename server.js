@@ -19,7 +19,7 @@ http.listen(process.env.PORT , () => {
 });
 
 io.on('connection', (socket) => {
-  let id_ = Math.floor((Math.random() * 10000) + 1);
+  let id_ = Math.floor((Math.random() * 1000000) + 1);
   socket.emit('connections', id_);
 
   socket.on('newState', function(id, state, room) {
