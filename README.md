@@ -3,6 +3,7 @@ Valaistuksenohjausta demoava nettisivu toteutettu yhteistyössä Wellness Engine
 
 Test server: https://wellness-kellohalli.herokuapp.com/
 
+Työpöytänäkymä:
 ![Website](https://github.com/epaavola/Valaistuksenohjaus-demo/blob/master/sample.jpg)
 
 ### Käytetyt teknologiat
@@ -13,3 +14,8 @@ Test server: https://wellness-kellohalli.herokuapp.com/
 - CSS
 - Vue.js
 
+Mobiilinäkymä:
+![Website](https://github.com/epaavola/Valaistuksenohjaus-demo/blob/master/sample_m.jpg)
+
+Ohjauksen mobiilinäkymä (Avautuu QR-koodin avulla) 
+![Website](https://github.com/epaavola/Valaistuksenohjaus-demo/blob/master/sample_m2.jpg)
