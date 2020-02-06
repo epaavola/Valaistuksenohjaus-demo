@@ -8,7 +8,7 @@ Lopputuote tulee sisältämään kaksi asiakaspään nettisivua sekä palvelimen
 Test server: https://wellness-kellohalli.herokuapp.com/
 
 #### Työpöytänäkymä:
-![Website](https://github.com/epaavola/Valaistuksenohjaus-demo/blob/master/sample.jpg)
+![Website](https://github.com/epaavola/Valaistuksenohjaus-demo/blob/master/sample_images/sample.jpg)
 
 #### Käytetyt teknologiat
 - Node.js
@@ -20,8 +20,8 @@ Test server: https://wellness-kellohalli.herokuapp.com/
 
 #### Mobiilinäkymä:
 
-![Website](https://github.com/epaavola/Valaistuksenohjaus-demo/blob/master/sample_m.jpg)
+![Website](https://github.com/epaavola/Valaistuksenohjaus-demo/blob/master/sample_images/sample_m.jpg)
 
 #### Ohjauksen mobiilinäkymä (Avautuu QR-koodin avulla) 
 
-![Website](https://github.com/epaavola/Valaistuksenohjaus-demo/blob/master/sample_m2.jpg)
+![Website](https://github.com/epaavola/Valaistuksenohjaus-demo/blob/master/sample_images/sample_m2.jpg)
