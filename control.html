@@ -64,7 +64,7 @@
       setRoom(x) {
         let parsedUrl = new URL(window.location.href);
         this.control_id = parsedUrl.searchParams.get("id");
-        this.state = x;
+        this.room = x;
         socket.emit('newState', this.control_id, this.state, this.room);
       }
     }
