@@ -58,18 +58,13 @@
       setMode(x) {
         let parsedUrl = new URL(window.location.href);
         this.control_id = parsedUrl.searchParams.get("id");
-        if(x === 1) this.state = 1;
-        if(x === 2) this.state = 2;
-        if(x === 3) this.state = 3;
-        if(x === 4) this.state = 4;
+        this.state = x;
         socket.emit('newState', this.control_id, this.state, this.room);
       },
       setRoom(x) {
         let parsedUrl = new URL(window.location.href);
         this.control_id = parsedUrl.searchParams.get("id");
-        if(x === 1) this.room = 1;
-        if(x === 3) this.room = 3;
-        if(x === 4) this.room = 4;
+        this.state = x;
         socket.emit('newState', this.control_id, this.state, this.room);
       }
     }
